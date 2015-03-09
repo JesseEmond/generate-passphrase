@@ -12,3 +12,5 @@ contracture supremo flaxseed unblock
 
 Passphrase would take 3705507.76 days to bruteforce at 1000 guesses per second.
 ```
+
+[obligatory xkcd reference](https://xkcd.com/936/)
