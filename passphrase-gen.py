@@ -1,4 +1,4 @@
-#!/bin/python3
+#!/bin/python
 import argparse, random, math
 
 def parse_args():
