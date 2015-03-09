@@ -1,6 +1,7 @@
 #!/bin/python
 import argparse, random, math
 
+# parse the arguments of the program
 def parse_args():
     parser = argparse.ArgumentParser(
             description=
@@ -16,18 +17,24 @@ def parse_args():
             help='clean output with only generated passphrases')
     return parser.parse_args()
 
-def read_words(filename):
+# reads a list of words from a file, one word per line
+def read_vocabulary(filename):
     with open(filename) as f:
         words = [line.strip() for line in f]
     return words
 
+# randomly generates a list of random words (from the given vocabulary) to
+# produce a passphrase
 def generate_passphrase_words(vocabulary, numWords):
     choice = random.SystemRandom().choice
     return [choice(vocabulary) for _ in range(numWords)]
 
+# displays the list of words from a passphrase
 def show_passphrase(words):
     print(' '.join(words))
 
+# displays how long it would take to bruteforce the password given the same
+# word list
 def show_guess_time(vocabularySize, numWords):
     guessSpeed = 1000 # guesses/sec
 
@@ -49,14 +56,15 @@ def show_guess_time(vocabularySize, numWords):
 
 def main():
     args = parse_args()
-    words = read_words(args.file)
+    vocabulary = read_vocabulary(args.file)
 
-    passphrases = [generate_passphrase_words(words, args.words) for _ in range(args.count)]
+    passphrases = [generate_passphrase_words(vocabulary, args.words)
+            for _ in range(args.count)]
     for passphrase in passphrases:
         show_passphrase(passphrase)
 
     if not args.clean:
-        show_guess_time(len(words), args.words)
+        show_guess_time(len(vocabulary), args.words)
 
 if __name__ == '__main__':
     main()
