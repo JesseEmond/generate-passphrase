@@ -1,5 +1,5 @@
 #!/bin/python3
-import argparse, random
+import argparse, random, math
 
 def parse_args():
     parser = argparse.ArgumentParser(
@@ -12,6 +12,8 @@ def parse_args():
             help='amount of words to include in the passphrase')
     parser.add_argument('-c', '--count', type=int, default=15,
             help='amount of passphrases to generate')
+    parser.add_argument('--clean', action='store_true',
+            help='clean output with only generated passphrases')
     return parser.parse_args()
 
 def read_words(filename):
@@ -26,6 +28,25 @@ def generate_passphrase_words(vocabulary, numWords):
 def show_passphrase(words):
     print(' '.join(words))
 
+def show_guess_time(vocabularySize, numWords):
+    guessSpeed = 1000 # guesses/sec
+
+    # time required = totalPossibilities / speed
+    #               = (vocabSize ^ numWords) / speed
+    # ln(time)      = ln( vocabSize ^ numWords / speed )
+    #               = numWords * ln(vocabSize) - ln(speed)
+    # time          = e ^ (numWords * ln(vocabSize) - ln(speed))
+    time = math.exp(numWords * math.log(vocabularySize) - math.log(guessSpeed))
+
+    minutes = time / 60
+    hours = minutes / 60
+    days = hours / 24
+
+    print()
+    print("Passphrase would take {:.2f} days to bruteforce "
+          "at {} guesses per second.".format(days, guessSpeed))
+
+
 def main():
     args = parse_args()
     words = read_words(args.file)
@@ -34,8 +55,8 @@ def main():
     for passphrase in passphrases:
         show_passphrase(passphrase)
 
-    #todo: print time to guess at 1000 guesses/sec
-
+    if not args.clean:
+        show_guess_time(len(words), args.words)
 
 if __name__ == '__main__':
     main()
