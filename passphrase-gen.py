@@ -53,6 +53,15 @@ def show_guess_time(vocabularySize, numWords):
     print("Passphrase would take {:.2f} days to bruteforce "
           "at {} guesses per second.".format(days, guessSpeed))
 
+# displays advice for ensuring good security policies are followed
+def show_advice():
+    print()
+    print("Make sure that the vocabulary of words used is made up mostly of "
+          "words that you would actually use for the guessing estimation to "
+          "be effective.")
+    print("You can increase the strength of your passphrase by including "
+          "punctuation, uppercase and symbols at original positions.")
+
 
 def main():
     args = parse_args()
@@ -65,6 +74,7 @@ def main():
 
     if not args.clean:
         show_guess_time(len(vocabulary), args.words)
+        show_advice()
 
 if __name__ == '__main__':
     main()
