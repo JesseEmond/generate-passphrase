@@ -6,11 +6,11 @@ Usage example:
 
 ```
 $ ./passphrase-gen.py --count 3 --words 4 --file words.txt
-detonation tolling crewmate lockout
-beekeeper pellagra deflate hypnotize
-contracture supremo flaxseed unblock
+beret desire soap ethiopia
+pest physician lobster pleasure
+feather men library talk
 
-Passphrase would take 3705507.76 days to bruteforce at 1000 guesses per second.
+Passphrase would take 339952.44 days to bruteforce at 1000 guesses per second.
 ```
 
 [obligatory xkcd reference](https://xkcd.com/936/)
