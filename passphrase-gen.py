@@ -1,5 +1,5 @@
 #!/bin/python
-import argparse, random, math
+import argparse, random, math, os.path, sys
 
 # parse the arguments of the program
 def parse_args():
@@ -62,9 +62,21 @@ def show_advice():
     print("You can increase the strength of your passphrase by including "
           "punctuation, uppercase and symbols at original positions.")
 
+# verifies that the parameters given to the program are valid and displays
+# an error message for those that are not.
+def validate_args(vocabularyFile):
+    valid = True
+    if not os.path.isfile(vocabularyFile):
+        print("\"" + vocabularyFile + "\" is not a file.", file=sys.stderr)
+        valid = False
+
+    return valid
 
 def main():
     args = parse_args()
+    if not validate_args(args.file):
+        sys.exit(1)
+
     vocabulary = read_vocabulary(args.file)
 
     passphrases = [generate_passphrase_words(vocabulary, args.words)
